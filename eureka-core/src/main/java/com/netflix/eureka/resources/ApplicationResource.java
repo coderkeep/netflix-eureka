@@ -47,7 +47,6 @@ import org.slf4j.LoggerFactory;
  * {@link com.netflix.discovery.shared.Application}.
  *
  * @author Karthik Ranganathan, Greg Kim
- *
  */
 @Produces({"application/xml", "application/json"})
 public class ApplicationResource {
@@ -74,13 +73,11 @@ public class ApplicationResource {
     /**
      * Gets information about a particular {@link com.netflix.discovery.shared.Application}.
      *
-     * @param version
-     *            the version of the request.
-     * @param acceptHeader
-     *            the accept header of the request to indicate whether to serve
-     *            JSON or XML data.
+     * @param version      the version of the request.
+     * @param acceptHeader the accept header of the request to indicate whether to serve
+     *                     JSON or XML data.
      * @return the response containing information about a particular
-     *         application.
+     * application.
      */
     @GET
     public Response getApplication(@PathParam("version") String version,
@@ -120,8 +117,7 @@ public class ApplicationResource {
     /**
      * Gets information about a particular instance of an application.
      *
-     * @param id
-     *            the unique identifier of the instance.
+     * @param id the unique identifier of the instance.
      * @return information about a particular instance.
      */
     @Path("{id}")
@@ -132,12 +128,11 @@ public class ApplicationResource {
     /**
      * Registers information about a particular instance for an
      * {@link com.netflix.discovery.shared.Application}.
+     * 服务实例注册的方法
      *
-     * @param info
-     *            {@link InstanceInfo} information of the instance.
-     * @param isReplication
-     *            a header parameter containing information whether this is
-     *            replicated from other nodes.
+     * @param info          {@link InstanceInfo} information of the instance.
+     * @param isReplication a header parameter containing information whether this is
+     *                      replicated from other nodes.
      */
     @POST
     @Consumes({"application/json", "application/xml"})
@@ -145,6 +140,7 @@ public class ApplicationResource {
                                 @HeaderParam(PeerEurekaNode.HEADER_REPLICATION) String isReplication) {
         logger.debug("Registering instance {} (replication={})", info.getId(), isReplication);
         // validate that the instanceinfo contains all the necessary required fields
+        // 保持代码的健壮性，代码的校验逻辑，应对别人胡乱传递的各种参数
         if (isBlank(info.getId())) {
             return Response.status(400).entity("Missing instanceId").build();
         } else if (isBlank(info.getHostName())) {
@@ -162,6 +158,7 @@ public class ApplicationResource {
         }
 
         // handle cases where clients may be registering with bad DataCenterInfo with missing data
+        // 可以根据策略方法优化逻辑，外部搞一个配置，通过 DataCenterFactory.getInstance 来根据配置获取不同的对象
         DataCenterInfo dataCenterInfo = info.getDataCenterInfo();
         if (dataCenterInfo instanceof UniqueIdentifier) {
             String dataCenterInfoId = ((UniqueIdentifier) dataCenterInfo).getId();

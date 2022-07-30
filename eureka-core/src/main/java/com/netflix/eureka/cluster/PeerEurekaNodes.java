@@ -184,6 +184,7 @@ public class PeerEurekaNodes {
         }
 
         // Add new peers
+        // 一個 peer eureka node 就代表一個 eureka server
         if (!toAdd.isEmpty()) {
             logger.info("Adding new peer nodes {}", toAdd);
             for (String peerUrl : toAdd) {

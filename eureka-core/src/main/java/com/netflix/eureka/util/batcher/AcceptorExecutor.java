@@ -192,6 +192,7 @@ class AcceptorExecutor<ID, T> {
                         scheduleTime = now + trafficShaper.transmissionDelay();
                     }
                     if (scheduleTime <= now) {
+                        // 拆分任务，将任务分批
                         assignBatchWork();
                         assignSingleItemWork();
                     }

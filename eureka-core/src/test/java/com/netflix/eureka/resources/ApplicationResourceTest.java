@@ -84,6 +84,8 @@ public class ApplicationResourceTest extends AbstractTester {
 
     @Test
     public void testGoodRegistration() throws Exception {
+        // instanceInfo 主要包含当前实例的 hostname port 等信息
+        // leaseInfo 与 server 维持心跳的间隔时间等信息
         InstanceInfo noIdInfo = InstanceInfoGenerator.takeOne();
         Response response = applicationResource.addInstance(noIdInfo, false+"");
         assertThat(response.getStatus(), is(204));

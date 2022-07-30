@@ -54,6 +54,9 @@ public class MeasuredRate {
                 public void run() {
                     try {
                         // Zero out the current bucket.
+                        // 如何计算每一分钟的内存计数
+                        // 将当前的 currentBucket 清零，
+                        // 设置到 lastBucket
                         lastBucket.set(currentBucket.getAndSet(0));
                     } catch (Throwable e) {
                         logger.error("Cannot reset the Measured Rate", e);
