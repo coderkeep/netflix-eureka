@@ -113,6 +113,7 @@ public class EurekaBootStrap implements ServletContextListener {
             // 初始化 environment 环境,主要是获取相关的配置,获取 config 的单例
             // 数据中心和环境
             initEurekaEnvironment();
+            // 初始 eureka server ，包括 client 与 server 的初始化
             initEurekaServerContext();
 
             ServletContext sc = event.getServletContext();
